@@ -9,6 +9,7 @@ var ResourceSerializer = require('../serializers/resource');
 var ResourceDeserializer = require('../deserializers/resource');
 var StripePaymentsFinder = require('../services/stripe-payments-finder');
 var StripePaymentsSerializer = require('../serializers/stripe-payments');
+var auth = require('../services/auth');
 
 module.exports = function (app, model, opts) {
   this.list = function (req, res, next) {
@@ -95,12 +96,21 @@ module.exports = function (app, model, opts) {
   this.perform = function () {
     var modelName = Inflector.pluralize(model.modelName).toLowerCase();
 
-    app.get('/forest/' + modelName, this.list);
-    app.get('/forest/' + modelName + '/:recordId', this.get);
-    app.post('/forest/' + modelName, this.create);
-    app.put('/forest/' + modelName + '/:recordId', this.update);
-    app.delete('/forest/' + modelName + '/:recordId', this.remove);
+    app.get('/forest/' + modelName, auth.ensureAuthenticated, this.list);
 
-    app.get('/forest/stripe_payments', this.stripePayments);
+    app.get('/forest/' + modelName + '/:recordId', auth.ensureAuthenticated,
+      this.get);
+
+    app.post('/forest/' + modelName, auth.ensureAuthenticated,
+      this.create);
+
+    app.put('/forest/' + modelName + '/:recordId', auth.ensureAuthenticated,
+      this.update);
+
+    app.delete('/forest/' + modelName + '/:recordId', auth.ensureAuthenticated,
+      this.remove);
+
+    app.get('/forest/stripe_payments', auth.ensureAuthenticated,
+      this.stripePayments);
   };
 };

@@ -35,7 +35,8 @@ exports.init = function (opts) {
   app.use(bodyParser.json({type: 'application/vnd.api+json'}));
 
   app.use(jwt({
-    secret: opts.jwtSigningKey
+    secret: opts.jwtSigningKey,
+    credentialsRequired: false
   }));
 
   var absModelDirs = path.resolve('.', opts.modelsDir);
