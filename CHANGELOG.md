@@ -2,6 +2,32 @@
 
 ## [Unreleased]
 
+## RELEASE 1.1.10 - 2017-06-28
+### Fixed
+- Serializer - Log an error in the console if the association doesn't exist.
+
+## RELEASE 1.1.9 - 2017-06-23
+### Added
+- Apimap - Send database type and orm version in apimap.
+
+### Fixed
+- Search - Fix crash on hasmany array association.
+
+## RELEASE 1.1.8 - 2017-06-13
+### Changed
+- Error Messages - Display the stack trace on unexpected errors.
+
+### Fixed
+- Error Messages - Display an explicit warning if Forest servers are in maintenance.
+
+## RELEASE 1.1.7 - 2017-06-07
+### Fixed
+- Records Serialization - Fix the object types case (kebab case) to prevent potential JSON api adapter errors on client side.
+
+## RELEASE 1.1.6 - 2017-06-01
+### Fixed
+- HasMany Smart Fields - Fix routes conflicts between hasMany Smart Fields and other associations.
+
 ## RELEASE 1.1.5 - 2017-05-30
 ### Added
 - Smart Collections - Add a new isSearchable property to display the search bar for Smart Collections.

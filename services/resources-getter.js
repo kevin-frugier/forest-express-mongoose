@@ -143,7 +143,8 @@ function ResourcesGetter(model, opts, params) {
           orQuery.$or.push(q);
         } else if (value.instance === 'Array') {
           var field = _.findWhere(schema.fields, { field: key });
-          if (field && _.isArray(field.type) && field.type[0] === 'String') {
+          if (field && _.isArray(field.type) && field.type[0] === 'String' &&
+            !field.reference) {
             q[key] = new RegExp('.*' + params.search + '.*', 'i');
             orQuery.$or.push(q);
           }
@@ -204,7 +205,7 @@ function ResourcesGetter(model, opts, params) {
             field.search(query, params.search);
           } catch(error) {
             Interface.logger.error('Cannot search properly on Smart Field ' +
-              field.field + ':\n' + error);
+              field.field, error);
           }
         }
       });
